@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Define the template strings
+template_key='const hexKey = "TEMPLATE_KEY_32"'
+template_iv='const hexIv = "TEMPLATE_IV_16"'
+
+file_path="./main.go"
+temp_file=$(mktemp)
+
+sed "s/^const hexKey.*/$template_key/g; s/^const hexIv.*/$template_iv/g" $file_path > $temp_file
+
+
+mv $temp_file $file_path

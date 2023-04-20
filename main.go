@@ -22,29 +22,29 @@ func main() {
 
 	key, err := hex.DecodeString(hexKey)
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("failed to decode hex key: %w", err))
 	}
 
 	iv, err := hex.DecodeString(hexIv)
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("failed to decode hex iv: %w", err))
 	}
 
 	if os.Args[1] == "-e" || os.Args[1] == "--encrypt" {
 		plaintext := []byte(os.Args[2])
 		ciphertext, err := encrypt(plaintext, key, iv)
 		if err != nil {
-			panic(err)
+			panic(fmt.Errorf("failed to encrypt password: %w", err))
 		}
 		fmt.Println(base64.StdEncoding.EncodeToString(ciphertext))
 	} else if os.Args[1] == "-d" || os.Args[1] == "--decrypt" {
 		ciphertext, err := base64.StdEncoding.DecodeString(os.Args[2])
 		if err != nil {
-			panic(err)
+			panic(fmt.Errorf("failed to decode cipher text to string: %w", err))
 		}
 		decrypted, err := decrypt(ciphertext, key, iv)
 		if err != nil {
-			panic(err)
+			panic(fmt.Errorf("failed to decrypt cipher text: %w", err))
 		}
 		fmt.Println(string(decrypted))
 	} else {
