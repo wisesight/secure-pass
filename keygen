@@ -1,0 +1,8 @@
+#!/bin/bash
+random32=$(openssl rand -hex 32)
+random16=$(openssl rand -hex 16)
+
+file_path="./main.go"
+temp_file=$(mktemp)
+sed "s/TEMPLATE_KEY_32/$random32/g; s/TEMPLATE_IV_16/$random16/g" $file_path > $temp_file
+mv $temp_file $file_path
